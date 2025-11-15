@@ -1,0 +1,38 @@
+{% extends 'shared/base.html' %}
+{% load jalali_tags %}
+{% block page_title %}مشاهده تور | هتل سجاد{% endblock %}
+
+{% block content %}
+  <section>
+    <img class="img-fluid mb-5 w-100 slideshow-height" src="{{ tour.image.url }}" alt="something wrong">
+  </section>
+  <section class="container">
+    <h1 class="display-6 captions d-flex justify-content-center">{{ tour.name }}</h1>
+    <div class="my-3">
+      <div class="d-flex justify-content-evenly flex-wrap">
+        <div class="m-2 p-3 border-success border border-3 rounded-5">
+          روز شروع: {{ tour.start_date|to_jalali:'%Y/%m/%d' }}
+        </div>
+        <div class="m-2 p-3 border-success border border-3 rounded-5">
+          روز پایان: {{ tour.end_date|to_jalali:'%Y/%m/%d' }}
+        </div>
+        <div class="m-2 p-3 border-success border border-3 rounded-5">
+          تعداد روز سفر: {{ tour.day_number }}
+        </div>
+        <div class="m-2 p-3 border-success border border-3 rounded-5">
+          ظرفیت: {{ tour.capacity }}
+        </div>
+        <div class="m-2 p-3 border-success border border-3 rounded-5">
+          قیمت: {{ tour.price }}
+        </div>
+      </div>
+      <div class="mt-3 m-150 px-3 pt-3 pb-5 border border-3 border-success rounded-5">
+
+        <p class="lead text-muted text-justify ">
+          {{ tour.description }}
+        </p>
+
+      </div>
+    </div>
+  </section>
+{% endblock %}

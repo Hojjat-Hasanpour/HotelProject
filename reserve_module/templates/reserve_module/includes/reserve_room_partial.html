@@ -1,0 +1,87 @@
+<section id="rooms_reserve">
+  <div class="py-4 container">
+    {% for type_room in type_rooms %}
+      <div class="row gy-4 mb-5">
+        <div class="col-md-12 col-lg-8 order-1 order-lg-0">
+          <div class="border border-success border-2 rounded-5 p-3 h-100 shadow-lg">
+            <h5>اتاق <span>{{ type_room.name }}</span></h5>
+            <h6>دسته بندی: <span>{{ type_room.category }}</span></h6>
+            <h6>ظرفیت: <span>{{ type_room.capacity }}</span></h6>
+            <h6>قیمت: <span>{{ type_room.price }}</span></h6>
+            <p class="cut-multiline text-justify">توضیحات اتاق: {{ type_room.description }}
+            </p>
+            <a class="btn btn-success" href="{{ type_room.get_absolute_url }}">
+              مشاهده اتاق
+            </a>
+            <button id="addRoomButton" class="btn btn-success"
+                    onclick="addRoomToReserve({{ type_room.id }})">
+              افزودن اتاق به لیست
+            </button>
+            <label for="count_{{ type_room.id }}">تعداد:
+
+              {#              <input type="number" min="0" max="{{type_room.room_count}}">#}
+              <select name="count_{{ type_room.id }}" id="count_{{ type_room.id }}">
+              {% if type_room.room_count is not None %}
+                {% with ''|center:type_room.room_count as range %}
+                  {% for i in range %}
+                    <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                  {% endfor %}
+                {% endwith %}
+              {% endif %}
+              </select>
+
+            </label>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-4">
+          <img class="img-fluid border border-success border-2 rounded-5 shadow-lg" src="{{ type_room.main_image.url }}"
+               alt="something wrong">
+        </div>
+      </div>
+    {% endfor %}
+    {#    <a class="btn btn-success" href="">تایید نهایی و پرداخت</a>#}
+  </div>
+  <div class="container">
+    <div class="border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2 shadow-lg">
+      <h5 class="m-0">لیست اتاق های انتخاب شده برای رزرو</h5>
+    </div>
+  </div>
+
+  <div class="mb-5 pb-5 px-0 container">
+    <div class="ps-3 fw-bold">
+      ظرفیت لیست رزرو:
+      <span id="roombooking_capacity">{{ current_roombooking.capacity }}</span>
+      /
+      <span id="accept_sum">{{ accept_capacity.accept_sum }}</span>
+    </div>
+    <div class="ps-3 fw-bold">
+      قیمت نهایی:
+      <span id="accept_price">{{ accept_capacity.total_price }}</span>
+
+    </div>
+    <div>
+      {% for reserve_room_type in reserve_room_types %}
+        <button id="single_room_box_{{ reserve_room_type.id }}"
+                onclick="removeRoomTypeFromRoomBooking({{ reserve_room_type.id }})" class="btn btn-success m-2">
+          حذف اتاق {{ reserve_room_type.name }}
+        </button>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<section>
+  <div class="toast-container position-fixed bottom-0 start-0 p-3">
+    <div id="addRoomToast" class="toast border border-3 border-success" role="alert" aria-live="assertive"
+         aria-atomic="true">
+      <div class="toast-header">
+        {#          <img src="..." class="rounded-5 me-2" alt="something wrong">#}
+        <strong class="me-auto">{{ title }}</strong>
+
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        {{ message }}
+      </div>
+    </div>
+  </div>
+</section>

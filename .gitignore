@@ -1,0 +1,78 @@
+# ======================================
+#        Python / Django ignore
+# ======================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.env/
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+db.sqlite3-journal
+
+# If your project uses another.sqlite3 file:
+identifier.sqlite
+identifier.sqlite3
+
+# Media/uploads (optional)
+uploads/
+media/
+
+# Static files (collected)
+staticfiles/
+static/
+
+# PyTest / coverage
+.coverage
+htmlcov/
+.cache
+pytest_cache/
+
+# IDEs
+.idea/
+.vscode/
+
+# VS Code Python settings
+*.code-workspace
+
+# ======================================
+#        Visual Studio SPECIFIC
+# (Only minimal needed for Python)
+# ======================================
+
+# VS folder
+.vs/
+
+# User-wide settings
+*.user
+*.suo
+
+# Build and temp folders
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Python Tools for Visual Studio
+__pycache__/
+*.pyc
+
+# ======================================
+#      OS generated files
+# ======================================
+Thumbs.db
+.DS_Store
+
+# Custom folders and files
+data.json

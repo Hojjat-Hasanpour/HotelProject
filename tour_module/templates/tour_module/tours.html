@@ -1,0 +1,52 @@
+{% extends 'shared/base.html' %}
+{% load thumbnail %}
+{% block page_title %}تور ها | هتل سجاد{% endblock %}
+
+{% block content %}
+  <!-- First section -->
+  <section class="py-4 my-5 container">
+    <div class="border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2 shadow-lg">
+      <h1 class="display-4">تور ها</h1>
+    </div>
+  </section>
+  <!-- Tours -->
+  <section class="container">
+    <div class="row row-cols-1 row-cols-md-2 g-4 pb-5 mb-5">
+      {% for tour in tours %}
+        <div class="col">
+          <div class="card h-100 border border-2 border-success shadow rounded-5 shadow-lg">
+            {% thumbnail tour.image "640x360" crop="center" as im %}
+              <img src="{{ im.url }}" class="card-img-top rounded-5" alt="something wrong">
+            {% endthumbnail %}
+            <div class="card-body">
+              <h5 class="card-title">{{ tour.name }}</h5>
+              <p class="card-text text-justify">{{ tour.description }}</p>
+              <a href="{% url 'tour_detail_page' tour.slug %}" class="stretched-link btn btn-success">مشاهده</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <nav aria-label="">
+      <ul class="pagination justify-content-center">
+        <li class="page-item{% if not page_obj.has_previous %} disabled">
+          <span class="page-link">قبلی</span>{% else %}">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">قبلی</a>{% endif %}
+        </li>
+        {% for page_number in paginator.page_range %}
+          <li class="page-item{% if page_obj.number == page_number %} active" aria-current="page" >
+            <span class="page-link">{{ page_number }}</span>{% else %}">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>{% endif %}
+          </li>
+        {% endfor %}
+        <li class="page-item{% if not page_obj.has_next %} disabled">
+          <span class="page-link">بعدی</span>{% else %}">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">بعدی</a>{% endif %}
+        </li>
+      </ul>
+    </nav>
+
+
+  </section>
+{% endblock %}

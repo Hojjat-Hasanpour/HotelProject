@@ -1,0 +1,125 @@
+{% extends 'shared/base.html' %}
+{% load jalali_tags %}
+{% load static %}
+{% block page_title %}داشبورد | هتل سجاد {{ user.username }}{% endblock %}
+
+{% block content %}
+  <section class="py-4 container">
+    <div class="border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2 shadow-lg">
+      <h5 class="m-0">{{ user }} خوش آمدید.</h5>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="d-flex flex-row flex-wrap justify-content-center mb-3">
+
+      <div class="p-2 mx-2"><a href="{% url 'edit_information_page' %}" class="btn btn-success">ویرایش اطلاعات</a></div>
+      <div class="p-2 mx-2"><a href="{% url 'reset_password_page' %}" class="btn btn-success">تغییر رمز ورود</a></div>
+      <div class="p-2 mx-2"><a href="{% url 'cancel_reserve_page' %}" class="btn btn-success">لغو رزرو اتاق</a></div>
+
+
+      <div class="p-2 mx-2"><a href="{% url 'tour_reserve_page' %}" class="btn btn-success">رزرو تور گردشگری</a></div>
+      <div class="p-2 mx-2"><a href="{% url 'cancel_tour_reserve_page' %}" class="btn btn-success">لغو رزرو تور گردشگری</a></div>
+      <div class="p-2 mx-2"><a href="{% url 'logout_page' %}" class="btn btn-success">خروج از حساب</a></div>
+
+    </div>
+  </section>
+
+  <section class="container py-5">
+    <div class="border border-2 border-success rounded rounded-5 shadow-lg">
+      <div class="d-flex justify-content-center p-2">
+        <h5>رزرواسیون</h5>
+      </div>
+      <form class="p-2" method="post" action="{% url 'reserve_room_page' %}">
+        {% csrf_token %}
+        <div class="row py-2">
+          <div class="col-sm-12 col-md-6">
+            {{ room_booking_form.start_date.label }}
+            {{ room_booking_form.start_date }}
+            {{ room_booking_form.start_date.errors }}
+          </div>
+          <div class="col-sm-12 col-md-6">
+            {{ room_booking_form.end_date.label }}
+            {{ room_booking_form.end_date }}
+            {{ room_booking_form.end_date.errors }}
+          </div>
+        </div>
+        <div class="row py-2">
+          <div class="col-sm-12 col-md-6 mb-2">
+            {{ room_booking_form.capacity.label }}
+            {{ room_booking_form.capacity }}
+            {{ room_booking_form.capacity.errors }}
+          </div>
+          <div class="col-sm-12 col-md-6 mb-2">
+            <button class="btn btn-success" type="submit">
+              مشاهده اتاق های موجود
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="py-4 container">
+    <div class="bg-success text-white border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2">
+      <h5 class="m-0">لیست های رزرو من</h5>
+    </div>
+  </section>
+
+  <section class="pb-5 container">
+  {% for room_book in room_booking_user %}
+    <div class="row gy-4 mb-5">
+      <div class="col-12 order-1 order-lg-0">
+        <div class="border border-success border-2 rounded-5 p-3 text-muted h-100 shadow-lg">
+          <h5>لیست رزرو از تاریخ
+            <span>{{ room_book.start_date|to_jalali:'%Y/%m/%d' }}</span>
+            تا تاریخ
+            <span>{{ room_book.end_date|to_jalali:'%Y/%m/%d' }}</span>
+          </h5>
+          <h6>تعداد روزها: <span>{{ room_book.amount }}</span></h6>
+          <h6>ظرفیت: <span>{{ room_book.capacity }}</span></h6>
+          <p>شماره اتاق های اختصاص یافته:
+            {% for sub_room in room_book.roombookingdetail_set.all %}
+              <span>{{ sub_room.room_number.number }}({{ sub_room.room_number.room_type }})
+                {% if not forloop.last %} - {% endif %} </span>
+            {% endfor %}
+          </p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </section>
+
+  <section class="py-4 container">
+    <div class="bg-success text-white border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2">
+      <h5 class="m-0">تور های رزرو من</h5>
+    </div>
+  </section>
+
+  <section class="pb-5 container">
+  {% for tour in tour_booking_user %}
+    <div class="row gy-4 mb-5">
+      <div class="col-md-12 col-lg-8 order-1 order-lg-0">
+        <div class="border border-success border-2 rounded-5 p-3 text-muted h-100 shadow-lg">
+          <h5><span>{{ tour.tour.name }}</span></h5>
+          <h6>ظرفیت تور: <span>{{ tour.tour.capacity}}</span> نفر</h6>
+          <h6>تعداد افراد: <span>{{ tour.number}}</span> نفر</h6>
+          <h6>تاریخ شروع: <span>{{ tour.tour.start_date|to_jalali:'%Y/%m/%d' }}</span></h6>
+          <h6>تاریخ پایان: <span>{{ tour.tour.end_date|to_jalali:'%Y/%m/%d' }}</span></h6>
+          <p class="cut-multiline text-justify">توضیحات تور: {{ tour.tour.description }}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-4">
+        <img class="img-fluid border border-success border-2 rounded-5 shadow-lg" src="{{tour.tour.image.url}}"
+             alt="something wrong">
+      </div>
+    </div>
+  {% endfor %}
+  </section>
+
+  {% block js_extentions %}
+    <link rel="stylesheet" href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
+    <script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
+  {% endblock %}
+{% endblock %}

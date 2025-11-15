@@ -1,0 +1,100 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% block page_title %}اتاق ها | هتل سجاد{% endblock %}
+
+{% block content %}
+  <!--first section-->
+  <section class="py-4 my-5 container">
+    <div class="border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2 shadow-lg">
+      <h1 class="display-4">اتاق ها</h1>
+    </div>
+  </section>
+
+  <!--Room Info-->
+  <section class="container">
+    <nav class="py-4">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        {% for type in room_category %}
+          <button class="text-success nav-link {% if type.id == 1 %}active{% endif %}" id="nav-{{ type.id }}-room-tab"
+                  data-bs-toggle="tab" data-bs-target="#nav-{{ type.id }}-room" type="button" role="tab"
+                  aria-controls="nav-{{ type.id }}-room" aria-selected="{% if type.id == 1 %}true{% else %}false{% endif %}">
+            {{ type.name }}</button>
+        {% endfor %}
+      </div>
+    </nav>
+
+    <div class="tab-content mb-5 pb-5" id="nav-tabContent">
+      {% for category in room_category %}
+        <div class="tab-pane fade{% if forloop.first %} active show{% endif %}" id="nav-{{ forloop.counter }}-room" role="tabpanel"
+                 aria-labelledby="nav-{{ forloop.counter }}-room-tab">
+
+        {% for subroom in category.roomtype_set.all %}
+              <div class="row g-3 mb-5">
+                <div class="col-md-4 border border-success p-3 rounded-5 order-sm-1 shadow-lg">
+                  <h3>{{ subroom.name }}</h3>
+                  <p class="lead text-muted">
+                    {{ subroom.description }}
+                  </p>
+                  <a class="btn btn-success" href="{{ subroom.get_absolute_url }}">مشاهده اتاق</a>
+                </div>
+                <div class="col-md-8">
+                  <img class="rounded-5 shadow-lg" src="{{ subroom.main_image.url }}" alt="something wrong" width="100%"
+                       height="100%">
+                </div>
+              </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+    </div>
+  </section>
+
+
+{% endblock %}
+{#{% if category.id == 1 %} show active{% endif %}#}
+
+{#<div class="tab-pane fade show active" id="nav-first-room" role="tabpanel" aria-labelledby="nav-first-room-tab">#}
+{#      <!--First Room-->#}
+{#      <div class="row g-3">#}
+{#        <div class="col-md-4 border border-success p-3 rounded-5 order-sm-1">#}
+{#          <h3>اتاق فلان</h3>#}
+{#          <p class="lead text-muted">#}
+{#            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و#}
+{#          </p>#}
+{#          <a class="btn btn-success" href="">مشاهده اتاق</a>#}
+{#        </div>#}
+{#        <div class="col-md-8">#}
+{#          <img class="rounded-5" src="{%static 'hotel/074.jpg' %}" alt="something wrong" width="100%" height="100%">#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{##}
+{#    <div class="tab-pane fade" id="nav-second-room" role="tabpanel" aria-labelledby="nav-second-room-tab">#}
+{#      <!--Second Room-->#}
+{#      <div class="row g-3">#}
+{#        <div class="col-md-4 border border-success p-3 rounded-5 order-sm-1">#}
+{#          <h3>اتاق فلان</h3>#}
+{#          <p class="lead text-muted">#}
+{#            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و#}
+{#          </p>#}
+{#          <a class="btn btn-success" href="">مشاهده اتاق</a>#}
+{#        </div>#}
+{#        <div class="col-md-8">#}
+{#          <img class="rounded-5" src="{%static 'hotel/047.jpg' %}" alt="something wrong" width="100%" height="100%">#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#    <div class="tab-pane fade" id="nav-third-room" role="tabpanel" aria-labelledby="nav-third-room-tab">#}
+{#      <!--Third Room-->#}
+{#      <div class="row g-3">#}
+{#        <div class="col-md-4 border border-success p-3 rounded-5 order-sm-1">#}
+{#          <h3>اتاق فلان</h3>#}
+{#          <p class="lead text-muted">#}
+{#            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و#}
+{#          </p>#}
+{#          <a class="btn btn-success" href="">مشاهده اتاق</a>#}
+{#        </div>#}
+{#        <div class="col-md-8">#}
+{#          <img class="rounded-5" src="{%static 'hotel/017.jpg' %}" alt="something wrong" width="100%" height="100%">#}
+{#        </div>#}
+{#      </div>#}

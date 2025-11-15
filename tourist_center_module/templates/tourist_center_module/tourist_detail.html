@@ -1,0 +1,18 @@
+{% extends 'shared/base.html' %}
+{% block page_title %}مشاهده مرکز گردشگری | هتل سجاد{% endblock %}
+
+{% block content %}
+  <section>
+    <img class="img-fluid mb-5 w-100 slideshow-height" src="{{ tourist.image.url }}" alt="something wrong">
+  </section>
+  <section class="container">
+    <h1 class="display-6 captions d-flex justify-content-center">{{ tourist.name }}</h1>
+    <div class="my-3">
+      <div class="mt-3 m-150 px-3 pt-3 pb-5 border border-3 border-success rounded-5">
+        <p class="lead text-muted text-justify ">
+          {{ tourist.description }}
+        </p>
+      </div>
+    </div>
+  </section>
+{% endblock %}

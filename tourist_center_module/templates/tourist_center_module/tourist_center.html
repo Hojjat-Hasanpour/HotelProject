@@ -1,0 +1,45 @@
+{%extends 'shared/base.html' %}
+{%block page_title%}مراکز گردشگری شهر | هتل سجاد{%endblock%}
+
+{%block content%}
+<section class="py-4 my-5 container">
+  <div class="border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2 shadow-lg">
+    <h1 class="display-4">مراکز گردشگری شهر</h1>
+  </div>
+</section>
+<!-- list centers -->
+<section class="pb-5 container">
+{% for tourist in tourist_center %}
+  <div class="row gy-4 my-5">
+    <div class="col-md-12 col-lg-8 order-1 order-lg-0">
+      <div class="border border-success border-2 rounded-5 p-3 h-100 shadow-lg">
+        <h3 class="">{{ tourist.name }}</h3>
+        <p class="text-muted text-justify">
+          {{ tourist.description }}
+        </p>
+        <a href="{% url 'tourist_detail_page' tourist.slug %}" class="btn btn-success">مشاهده</a>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-4">
+      <img class="img-fluid border border-success border-2 rounded-5 shadow-lg" src="{{ tourist.image.url }}" alt="something wrong">
+    </div>
+  </div>
+{% endfor %}
+
+<nav aria-label="">
+      <ul class="pagination justify-content-center">
+        <li class="page-item{% if not page_obj.has_previous %} disabled">
+          <span class="page-link">قبلی</span>{% else %}"><a class="page-link" href="?page={{page_obj.previous_page_number}}">قبلی</a>{% endif %}
+        </li>
+        {% for page_number in paginator.page_range %}
+          <li class="page-item{% if page_obj.number == page_number %} active" aria-current="page" >
+          <span class="page-link">{{ page_number }}</span>{% else %}"> <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>{% endif %}
+        </li>
+        {% endfor %}
+        <li class="page-item{% if not page_obj.has_next %} disabled">
+          <span class="page-link">بعدی</span>{% else %}"><a class="page-link" href="?page={{page_obj.next_page_number}}">بعدی</a>{% endif %}
+        </li>
+      </ul>
+    </nav>
+</section>
+{%endblock%}

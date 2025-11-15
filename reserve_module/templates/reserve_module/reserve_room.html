@@ -1,0 +1,17 @@
+{% extends 'shared/base.html' %}
+{% load render_partial %}
+{% block page_title %}هتل سجاد{% endblock %}
+
+{% block content %}
+  <section class="py-4 container">
+    <div class="border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2 shadow-lg">
+      <h5 class="m-0">رزرو اتاق</h5>
+    </div>
+  </section>
+  {% render_partial 'reserve_module.views.reserve_room_component' %}
+
+  <section class="py-4 container">
+    <button class="btn btn-lg btn-success" onclick="submitReserveRoom()">مرحله بعد و پرداخت</button>
+  </section>
+
+{% endblock %}

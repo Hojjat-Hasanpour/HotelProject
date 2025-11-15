@@ -1,0 +1,59 @@
+{% extends 'shared/base.html' %}
+{% block page_title %}
+  لغو رزرو تور گردشگری | هتل سجاد
+{% endblock %}
+{% block content %}
+  <section class="py-4 my-5 container">
+    <div class="border border-2 border-success rounded-5 d-flex justify-content-center align-items-center py-2 shadow-lg">
+      <h3 class="display-4">لغو رزرواسیون</h3>
+    </div>
+  </section>
+  <section class="container">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'success' %}
+          <div class="alert alert-success rounded-5">
+            {{ message }}
+          </div>
+        {% endif %}
+        {% if message.tags == 'error' %}
+          <div class="alert alert-warning rounded-5">
+            {{ message }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <div class="py-5">
+      <div class="px-3 border border-2 border-success rounded rounded-5 shadow-lg">
+        <div class="d-flex justify-content-center p-2">
+          <h5>لیست رزرو تور مورد نظر را انتخاب کنید</h5>
+        </div>
+
+        <form class="p-2" action="{% url 'cancel_tour_reserve_page' %}" method="post">
+          {% csrf_token %}
+          <div class="row g-3 py-2">
+            <div class="col-sm-12 col-lg-5">
+              {% if form.tour %}
+                {{ form.tour.label }}
+                {{ form.tour }}
+                {{ form.tour.errors }}
+              {% else %}
+                <option value="0">بدون لیست رزرو</option>
+              {% endif %}
+            </div>
+            <div class="col-sm-12 col-lg-3">
+              {{ form.confirm.label }}
+              {{ form.confirm }}
+              {{ form.confirm.errors }}
+            </div>
+            <div class="col-lg-2">
+              <button class="btn btn-success" type="submit">
+                انتخاب
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

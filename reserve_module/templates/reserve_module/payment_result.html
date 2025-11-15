@@ -1,0 +1,29 @@
+{% extends 'shared/base.html' %}
+{% block page_title %} نتیجه پرداخت | هتل سجاد {% endblock %}
+{% block content %}
+  <section>
+  <div class="container py-5 my-5">
+        <div class="row">
+            <div class="col-md-12">
+                {% if info %}
+                    <div class="alert alert-info">
+                        {{ info }}
+                    </div>
+                {% endif %}
+
+                {% if error %}
+                    <div class="alert alert-info">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                {% if success %}
+                    <div class="alert alert-info">
+                        {{ success }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+  </section>
+{% endblock %}

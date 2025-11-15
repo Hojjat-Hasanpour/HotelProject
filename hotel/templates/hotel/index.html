@@ -1,0 +1,181 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block page_title %}هتل سجاد{% endblock %}
+
+{% block content %}
+  <!--SlideShow-->
+  <section class="mb-5">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        {% for slide in slider %}
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
+                  {% if forloop.first %} class="active" aria-current="true"{% endif %}
+                  aria-label="Slide {{ slide.id }}"></button>
+        {% endfor %}
+
+      </div>
+      <div class="carousel-inner">
+        {% for slide in slider %}
+          <div class="carousel-item slideshow-height {% if forloop.first %}active{% endif %}">
+            <img src="{{ slide.image.url }}" class="img-fluid d-block w-100" alt="something wrong">
+          </div>
+        {% endfor %}
+
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+  <!--SlideShow-->
+  <!--Reserve-->
+  <section class="container row mx-auto my-5">
+    <div class="col-12 order-1 order-md-0 col-md-8 border border-success rounded-5 d-flex align-self-stretch align-items-center justify-content-center mb-md-0 mb-sm-3 shadow-lg">
+      <div class="row justify-content-center align-content-center">
+        <div class="d-flex flex-column justify-content-center">
+          <p class="lead text-muted resize-font">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+            از طراحان
+            گرافیک است.
+          </p>
+          <button type="button" class="btn btn-lg btn-success mx-auto my-1">رزرواسیون</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 pe-md-0">
+      <img src="{{ image_reserve.image.url }}" class="img-fluid rounded-5 d-block w-100 shadow-lg"
+           alt="something wrong">
+    </div>
+
+  </section>
+  <!--Reserve-->
+  <!--Rooms-->
+  <section class="py-5 background m-150">
+    <div class="container">
+      <div class="display-5 d-flex justify-content-center"><span class="captions rounded rounded-3 mb-5">اتاق ها</span>
+      </div>
+
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          {% for room_type in room_types %}
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ forloop.counter0 }}"
+                    {% if forloop.first %} class="active"
+                    aria-current="true" {% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+          {% endfor %}
+        </div>
+        <div class="carousel-inner rounded-5">
+          {% for room_type in room_types %}
+            <div class="carousel-item slideshow-height-70{% if forloop.first %} active{% endif %}">
+              <img src="{{ room_type.main_image.url }}" class="d-block w-100" alt="something wrong">
+              <div class="carousel-caption d-none d-md-block">
+                <a href="{{room_type.get_absolute_url }}">
+                  <h5 class="d-inline-block text-white">{{ room_type.name }}</h5>
+                </a>
+                <p class="cut-multiline">{{ room_type.description }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <!-- /////////////////////////// -->
+      <div class="d-flex justify-content-center mt-3">
+        <a class="btn btn-outline-dark" href="{% url 'rooms_page' %}">مشاهده اتاق ها</a>
+      </div>
+    </div>
+  </section>
+  <!--Rooms-->
+  <!--Tours-->
+  <section class="py-2 m-150 mb-0">
+    <div class="display-5 d-flex justify-content-center"><span class="captions rounded rounded-3 mb-5">تور ها</span>
+      </div>
+
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for tour in tours %}
+          <div class="col">
+            <div class="card h-100 border border-2 border-success rounded-5 shadow-lg">
+              {% thumbnail tour.image "200x200" crop="center" as im %}
+                <img src="{{ im.url }}" class="card-img-top rounded-5" width="{{ im.width }}" height="{{ im.height }}"
+                     alt="something wrong">
+              {% endthumbnail %}
+
+              <div class="card-body">
+                <h5 class="card-title">{{ tour.name }}</h5>
+                <p class="card-text cut-multiline text-justify">{{ tour.description }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+
+      <div class="d-flex justify-content-center my-5 mt-3">
+        <a href="{% url 'tours_page' %}" class="btn btn-success">مشاهده تور ها</a>
+      </div>
+    </div>
+    <hr class="bg-success mx-auto rounded rounded-5 hr-size">
+  </section>
+  <!--Tours-->
+  <!--Services-->
+  <section id="services" class="pt-5 mb-5">
+    <div class="container">
+      <div class="display-6 d-flex justify-content-center my-5">
+        <h2 class="captions">بهترین خدمات، عالی ترین کیفیت</h2>
+      </div>
+      <div class="bg-success shadow rounded rounded-5">
+        <div class="row row-cols-2 row-cols-md-6 g-4">
+          {% for service in services %}
+          <div class="col">
+            <div class="card h-100 text-center bg-success border-0 rounded-5">
+              <img src="{{ service.logo.url }}" class="card-img-top w-50 mx-auto" alt="something wrong">
+              <div class="card-body">
+                <a class="lnk" href="{{ service.get_absolute_url }}">
+                  <h5 class="card-title resize-font">{{ service.title }}</h5>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!--Services-->
+  <section class="container text-justify m-150">
+    <h1 class="captions">درباره هتل</h1>
+    <p class="lead text-muted resize-font">{{ site_setting.about_us_text }}</p>
+  </section>
+
+
+{% endblock %}
+
+
+{#<img src="https://img.icons8.com/ios-glyphs/120/000000/twitter--v1.png"/>#}
+{#<img src="https://img.icons8.com/ios-glyphs/120/000000/instagram-new.png"/>#}
+{#<img src="https://img.icons8.com/ios-glyphs/30/000000/facebook-new.png"/>#}
+{#<img src="https://img.icons8.com/ios-glyphs/120/000000/whatsapp.png"/>#}
+{#<img src="https://img.icons8.com/external-xnimrodx-lineal-xnimrodx/64/ffffff/external-cake-event-and-party-xnimrodx-lineal-xnimrodx-2.png"/> cake#}
+{#<img src="https://img.icons8.com/metro/52/ffffff/airport.png"/>#}
+{#<img src="https://img.icons8.com/ios-filled/100/ffffff/exchange.png"/>#}
+{#<img src="https://img.icons8.com/glyph-neue/64/ffffff/meal.png"/>#}

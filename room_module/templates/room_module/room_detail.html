@@ -1,0 +1,65 @@
+{% extends 'shared/base.html' %}
+
+{% block page_title %}مشاهده تور | هتل سجاد{% endblock %}
+
+{% block content %}
+
+  <!--SlideShow-->
+  <section class="mb-5">
+    <div id="carouselImagesRoomIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselImagesRoomIndicators" data-bs-slide-to="0"
+                class="active" aria-current="true" aria-label="Slide 1"></button>
+        {% for image in room_images %}
+          <button type="button" data-bs-target="#carouselImagesRoomIndicators" data-bs-slide-to="{{ forloop.counter }}"
+                  aria-label="Slide {{ forloop.counter }}"></button>
+        {% endfor %}
+
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item slideshow-height active">
+          <img src="{{ room.main_image.url }}" class="img-fluid d-block w-100" alt="something wrong">
+        </div>
+      </div>
+      <div class="carousel-inner">
+        {% for image in room_images %}
+          <div class="carousel-item slideshow-height">
+            <img src="{{ image.image.url }}" class="img-fluid d-block w-100" alt="something wrong">
+          </div>
+        {% endfor %}
+
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselImagesRoomIndicators"
+              data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselImagesRoomIndicators"
+              data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+  <!--SlideShow-->
+  <section class="container">
+    <h1 class="display-6 captions d-flex justify-content-center">اتاق {{ room.name }}</h1>
+    <div class="my-3">
+      <div class="d-flex justify-content-evenly">
+        <div class="p-3 border-success border border-3 rounded-5">
+          ظرفیت: {{ room.capacity }}
+        </div>
+        <div class="p-3 border-success border border-3 rounded-5">
+          دسته بندی: {{ room.category }}
+        </div>
+      </div>
+      <div class="mt-3 m-150 px-3 pt-3 pb-5 border border-3 border-success rounded-5">
+
+        <p class="lead text-muted text-justify ">
+          {{ room.description }}
+        </p>
+
+      </div>
+    </div>
+  </section>
+{% endblock %}
